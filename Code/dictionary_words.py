@@ -8,7 +8,8 @@ wordlist = wl.read().split()
 
 def random_sentence():
     sentence = random.choices(wordlist, k=number)
-    str = ' '.join(sentence)
+    sentence[0] = sentence[0].capitalize()
+    str = ' '.join(sentence) + "."
     print(str)
 
 if __name__ == '__main__':
