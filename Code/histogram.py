@@ -1,8 +1,15 @@
-import sys
+import string
 
 def histogram(filename):
-    book = open(filename, "r").read().lower()
-    wordlist = book.split()
+    # Load the text from the file and convert to lowercase
+    with open(filename, "r") as file:
+        book = file.read().lower()
+
+    # Create a translation table to remove punctuation
+    translator = str.maketrans("", "", string.punctuation)
+
+    # Remove punctuation from words and split into a list
+    wordlist = book.translate(translator).split()
     histogram = dict()
     for i in wordlist:
         histogram[i] = histogram.get(i, 0) + 1
