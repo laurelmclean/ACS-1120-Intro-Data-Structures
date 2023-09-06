@@ -7,7 +7,7 @@ def histogram(filename):
         book = file.read().lower()
 
     # Create a translation table to remove punctuation
-    translator = str.maketrans("", "", string.punctuation)
+    translator = str.maketrans("", "", string.punctuation + "“”‘’")
 
     # Remove punctuation from words and split into a list
     wordlist = book.translate(translator).split()
@@ -33,6 +33,14 @@ def stochastic_sampling(histogram):
     word = random.choices(words, weights=normalized_probabilities, k=1)[0]
     return word
 
+def main():
+    hist = histogram("alice.txt")
+    length = random.randint(1, 15)
+    selected_words = [stochastic_sampling(hist) for word in range(length)]
+    selected_words[0] = selected_words[0].capitalize()
+    random_sentence = " ".join(selected_words)
+    return random_sentence
+
 if __name__ == '__main__':
     alice_histogram = histogram("alice.txt")
     print(alice_histogram)
@@ -41,3 +49,4 @@ if __name__ == '__main__':
     frequency_word = frequency('her', alice_histogram)
     print(frequency_word)
     print(stochastic_sampling(alice_histogram))
+    print(main())
