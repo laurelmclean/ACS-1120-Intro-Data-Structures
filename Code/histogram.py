@@ -1,4 +1,5 @@
 import string
+import random
 
 def histogram(filename):
     # Load the text from the file and convert to lowercase
@@ -21,6 +22,17 @@ def unique_words(histogram):
 def frequency(word, histogram):
     return histogram[word]
 
+
+def stochastic_sampling(histogram):
+    words = list(histogram.keys())
+    probabilities = list(histogram.values())
+    total_probability = sum(probabilities)
+    normalized_probabilities = []
+    for i in probabilities:
+        normalized_probabilities.append(i / total_probability)
+    word = random.choices(words, weights=normalized_probabilities, k=1)[0]
+    return word
+
 if __name__ == '__main__':
     alice_histogram = histogram("alice.txt")
     print(alice_histogram)
@@ -28,3 +40,4 @@ if __name__ == '__main__':
     print(length)
     frequency_word = frequency('her', alice_histogram)
     print(frequency_word)
+    print(stochastic_sampling(alice_histogram))
