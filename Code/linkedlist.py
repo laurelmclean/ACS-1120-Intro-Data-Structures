@@ -56,10 +56,9 @@ class LinkedList:
         must loop through entire list to determine length"""
         # Loop through all nodes and count one for each
         count = 0
-        current_node = self.head
-        while current_node is not None:
-            count += 1
-            current_node = current_node.next
+        if self.items() is not None:
+            for item in self.items():
+                count += 1
         return count
 
 
@@ -88,10 +87,10 @@ class LinkedList:
             
         # Prepend the new node before the current head, if it exists
         if self.is_empty() == True:
-                self.head = new_node
-                self.tail = new_node
+            self.head = new_node
+            self.tail = new_node
         else:
-            self.head.next = new_node
+            new_node.next = self.head
             self.head = new_node
 
 
@@ -153,8 +152,18 @@ def test_linked_list():
     print('tail: {}'.format(ll.tail))
     print('length: {}'.format(ll.length()))
 
+    print('\nTesting prepend:')
+    for item in ['A', 'B', 'C']:
+        print('prepend({!r})'.format(item))
+        ll.prepend(item)
+        print('list: {}'.format(ll))
+
+    print('head: {}'.format(ll.head))
+    print('tail: {}'.format(ll.tail))
+    print('length: {}'.format(ll.length()))
+
     # Enable this after implementing delete method
-    delete_implemented = False
+    delete_implemented = True
     if delete_implemented:
         print('\nTesting delete:')
         for item in ['B', 'C', 'A']:
