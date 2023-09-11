@@ -56,9 +56,10 @@ class LinkedList:
         must loop through entire list to determine length"""
         # Loop through all nodes and count one for each
         count = 0
-        if self.items() is not None:
-            for item in self.items():
-                count += 1
+        current_node = self.head
+        while current_node is not None:
+            count += 1
+            current_node = current_node.next
         return count
 
 
