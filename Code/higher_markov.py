@@ -62,7 +62,7 @@ def main():
     chain = HigherMarkovChain(word_list)
     chain.create_markov_chain()
     chain.generate_sentence()
-    print(chain.random_sentence)
+    return chain.random_sentence
 
 if __name__ == '__main__':
     main()
