@@ -8,6 +8,7 @@
   <title>Alice in Wonderland Tweet Generator</title>
   <style>
     @import url('https://fonts.cdnfonts.com/css/alice-in-wonderland');
+
     body {
       height: 100vh;
       font-family: 'Alice in Wonderland', sans-serif;
@@ -18,13 +19,19 @@
       align-items: center;
       background-image: url("https://d23.com/app/uploads/2015/07/alice-in-wonderland.jpg");
       background-size: cover;
-
     }
 
     h1 {
       color: white;
       font-size: 80px;
+    }
 
+    .tweet-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      margin-top: 20px;
+      max-width: 800px;
     }
 
     h2 {
@@ -34,13 +41,46 @@
       width: fit-content;
       display: inline-block;
       border-radius: 0.2em;
+      margin-bottom: 10px;
     }
+
+    .timestamp {
+      color: white;
+      font-size: 30px;
+    }
+
+    .button {
+      background-color:#b4f2ff;
+      color: #fff;    
+      border:none;
+      border-radius:10px;
+      padding:15px;
+      min-height:30px; 
+      min-width: 120px;
+    }
+
+    .button:hover {
+      background-color:#002ead;
+      transition: 0.7s;
+  }
   </style>
 </head>
 
 <body>
   <h1>Alice in Wonderland Tweet Generator</h1>
-  <h2>{{ sentence }}</h2>
+  <div class="tweet-container">
+    <h2>{{ sentence }}</h2>
+    <div class="timestamp" id="currentDateTime"></div>
+    <div class="timestamp">@aliceinwonderland</div>
+  </div>
+  <button type="button" class="button" onClick="window.location.reload(true)">Tweet</button>
+
+  <script>
+      const dateTimeElement = document.getElementById("currentDateTime");
+      const now = new Date();
+      const dateTimeString = now.toLocaleString(); // Get a formatted date and time string
+      dateTimeElement.textContent = dateTimeString; // Set the content of the element
+  </script>
 </body>
 
 </html>
