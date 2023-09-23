@@ -1,5 +1,7 @@
 import random
 import string
+import re
+
 
 class HigherMarkovChain():
     def __init__(self, source_text):
@@ -57,8 +59,9 @@ class HigherMarkovChain():
 def main():
     text_file = 'alice.txt'
     source_text = open(text_file, "r").read()
-    translator = str.maketrans("", "", string.punctuation + "“”‘’")
-    word_list = source_text.translate(translator).lower().split()
+    text = source_text.replace("’", "'")
+    text_without_numbers = re.sub(r"[0-9_]+", "", text) 
+    word_list = [match.group() for match in re.finditer(r"[a-zA-Z0-9_'.:,-;!?]+", text_without_numbers)]
     chain = HigherMarkovChain(word_list)
     chain.create_markov_chain()
     chain.generate_sentence()
