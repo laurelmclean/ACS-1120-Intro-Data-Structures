@@ -1,13 +1,20 @@
 import random
-import string
 import re
-
 
 class HigherMarkovChain():
     def __init__(self, source_text):
-        self.words_list = source_text
+        self.words_list = self.clean_text(source_text)
         self.markov_chain = {}
         self.random_sentence = []
+
+    def clean_text(self, source_text):
+        # Replace special characters and convert ’ to '
+        cleaned_text = source_text.replace("’", "'")
+        # Remove numbers and underscores
+        cleaned_text = re.sub(r"[0-9_]+", "", cleaned_text)
+        # Extract words using regex
+        word_list = [match.group() for match in re.finditer(r"[a-zA-Z0-9_'.:,-;!?]+", cleaned_text)]
+        return word_list
 
     def create_markov_chain(self):
         window_size = 2 
@@ -50,7 +57,7 @@ class HigherMarkovChain():
                 # Update the current tuple by removing the first word and adding the next word
                 current_tuple = current_tuple[1:] + (next_word,)
         
-        # genereate random end punctuation
+        # Generate random end punctuation
         end_punctuation = ['.', '!', '?', '...']
         random_end_punctuation = random.choice(end_punctuation)
 
@@ -59,10 +66,7 @@ class HigherMarkovChain():
 def main():
     text_file = 'alice.txt'
     source_text = open(text_file, "r").read()
-    text = source_text.replace("’", "'")
-    text_without_numbers = re.sub(r"[0-9_]+", "", text) 
-    word_list = [match.group() for match in re.finditer(r"[a-zA-Z0-9_'.:,-;!?]+", text_without_numbers)]
-    chain = HigherMarkovChain(word_list)
+    chain = HigherMarkovChain(source_text)
     chain.create_markov_chain()
     chain.generate_sentence()
     return chain.random_sentence
